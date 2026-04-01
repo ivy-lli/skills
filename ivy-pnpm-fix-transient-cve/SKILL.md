@@ -34,6 +34,12 @@ Each repository has a branch-based working directory structure. Default reposito
 2. The user has network access for `git pull` and dependency resolution.
 3. The user confirms how to handle dirty worktrees before any revert/discard action.
 
+## Audit Count Rules
+- Use repo-scoped commands for all `pnpm` operations: `pnpm -C <repo-dir> ...`.
+- When reporting CVE counts from `pnpm audit --json`, sum the numeric values in `metadata.vulnerabilities`.
+- Do not report `n/a` if the JSON output is available and the vulnerability counts can be derived from it.
+- If post-fix advisories remain, capture both the count and the remaining advisory details (CVE or GitHub advisory ID plus affected package).
+
 ## Procedure
 Run the following for each target repository's branch-specific working directory.
 
@@ -44,25 +50,26 @@ Run the following for each target repository's branch-specific working directory
 2. Check for uncommitted changes before branch sync.
 	- If the worktree is clean: continue.
 	- If the worktree is dirty: stop and ask the user whether to keep, stash, or discard changes.
+	- If the user approves discarding only known remediation side effects, revert only the specific approved files instead of resetting the whole worktree.
 	- Never discard or revert local changes without explicit user approval.
 
 3. Sync latest baseline.
    - Confirm the current branch with `git status`.
-   - Pull latest changes from remote: `git pull`.
+   - Pull latest changes from remote with fast-forward only: `git pull --ff-only`.
 4. Baseline install and vulnerability scan.
-	- Run `pnpm install`.
-	- Run `pnpm audit` and record current findings.
+	- Run `pnpm -C <repo-dir> install`.
+	- Run `pnpm -C <repo-dir> audit --json` and record current findings.
 
 5. Apply automated remediation attempt.
-	- Run `pnpm audit --fix`.
-	- Run `pnpm install`.
+	- Run `pnpm -C <repo-dir> audit --fix`.
+	- Run `pnpm -C <repo-dir> install`.
 
 6. Revert workspace side effects and normalize lock state.
 	- If `pnpm-workspace.yaml` changed due to remediation, revert only that file.
-	- Run `pnpm install` again after the revert.
+	- Run `pnpm -C <repo-dir> install` again after the revert.
 
 7. Re-scan vulnerabilities.
-	- Run `pnpm audit` again.
+	- Run `pnpm -C <repo-dir> audit --json` again.
 	- Compare with baseline to determine whether CVEs were reduced or removed.
 
 8. Inspect resulting file changes.
@@ -73,16 +80,27 @@ Run the following for each target repository's branch-specific working directory
    - If no relevant changes exist, do not open a branch/PR.
    - If relevant changes exist (within the branch-specific working directory):
      - Create a new branch named like `chore/pnpm-audit-fix-transient-cve-<date>`.
-     - Commit with a clear message describing audit-driven dependency updates.
-     - Push branch and open one PR per repository working directory:
-       - `git push -u origin <branch-name>`
-       - Detect the current branch from the folder context (e.g., `master` for `<repo>-master/`)
-       - `gh pr create --base <current-branch> --head <branch-name> --title "chore: pnpm audit fix transient CVEs" --body "<summary>"`
-     - In the PR description, include:
-       - baseline audit status
-       - final audit status
-       - files changed
-       - any remaining unresolved CVEs
+      - Commit with a clear message describing audit-driven dependency updates.
+      - Push branch and open one PR per repository working directory:
+        - `git push -u origin <branch-name>`
+        - Detect the current branch from the folder context (e.g., `master` for `<repo>-master/`)
+        - `gh pr create --base <current-branch> --head <branch-name> --title "chore: pnpm audit fix transient CVEs" --body "<summary>"`
+      - Verify the PR body before finishing so the reported audit counts are concrete and not `n/a`.
+      - In the PR description, include:
+        - baseline audit status
+        - final audit status
+        - files changed
+        - any remaining unresolved CVEs
+      - Format unresolved items as an indented sub-list, for example:
+
+```md
+## Summary
+- Baseline audit status: 13 CVEs
+- Final audit status: 1 CVE
+- Files changed: pnpm-lock.yaml
+- Remaining unresolved CVEs:
+  - CVE-2026-34601: @xmldom/xmldom
+```
 
 ## Decision Points
 - Branch folder missing or not a git repo: skip that repository and report it.
