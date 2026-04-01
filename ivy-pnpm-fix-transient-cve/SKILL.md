@@ -20,6 +20,7 @@ Each repository has a branch-based working directory structure. Default reposito
 - `/Users/lli/GitWorkspace/form-editor/form-editor-master/`
 - `/Users/lli/GitWorkspace/persistence-editor/persistence-editor-master/`
 - `/Users/lli/GitWorkspace/process-editor/process-editor-master/`
+- `/Users/lli/GitWorkspace/primefaces-themes/primefaces-themes-master/`
 - `/Users/lli/GitWorkspace/restclient-editor/restclient-editor-master/`
 - `/Users/lli/GitWorkspace/role-editor/role-editor-master/`
 - `/Users/lli/GitWorkspace/runtimelog-view/runtimelog-view-master/`
@@ -27,6 +28,7 @@ Each repository has a branch-based working directory structure. Default reposito
 - `/Users/lli/GitWorkspace/user-editor/user-editor-master/`
 - `/Users/lli/GitWorkspace/variable-editor/variable-editor-master/`
 - `/Users/lli/GitWorkspace/vscode-designer/vscode-designer-master/`
+- `/Users/lli/GitWorkspace/webservice-editor/webservice-editor-master/`
 - `/Users/lli/GitWorkspace/neo/neo-master/`
 
 ## Preconditions
@@ -45,7 +47,10 @@ Run the following for each target repository's branch-specific working directory
 
 1. Enter the branch working directory (e.g., `<repo>-master/`).
    - Confirm this is a valid git repository with `git status`.
-   - The current branch should already be set to the intended branch (typically `master` when in the `-master/` folder).
+   - Determine the intended base branch from the working-directory context. For `*-master/` folders, the intended branch is `master`.
+   - Verify the current branch matches the intended base branch before continuing. Do not use some other currently checked out feature branch just because it is active.
+   - If the current branch does not match the intended base branch and the worktree is clean, switch to the intended base branch first.
+   - If the current branch does not match and switching branches is blocked by local changes, stop and ask the user how to handle them.
    - If the folder doesn't exist or isn't a git repo, skip that repository and report it.
 2. Check for uncommitted changes before branch sync.
 	- If the worktree is clean: continue.
@@ -54,7 +59,7 @@ Run the following for each target repository's branch-specific working directory
 	- Never discard or revert local changes without explicit user approval.
 
 3. Sync latest baseline.
-   - Confirm the current branch with `git status`.
+   - Confirm again that the current branch is the intended base branch for the working-directory context.
    - Pull latest changes from remote with fast-forward only: `git pull --ff-only`.
 4. Baseline install and vulnerability scan.
 	- Run `pnpm -C <repo-dir> install`.
