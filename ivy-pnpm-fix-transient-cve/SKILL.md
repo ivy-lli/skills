@@ -85,6 +85,9 @@ Run the following for each target repository's branch-specific working directory
         - `git push -u origin <branch-name>`
         - Detect the current branch from the folder context (e.g., `master` for `<repo>-master/`)
         - `gh pr create --base <current-branch> --head <branch-name> --title "chore: pnpm audit fix transient CVEs" --body "<summary>"`
+      - After the PR is created successfully, switch back to the default branch for that working directory and delete the temporary local branch:
+        - `git checkout <current-branch>`
+        - `git branch -d <branch-name>`
       - Verify the PR body before finishing so the reported audit counts are concrete and not `n/a`.
       - In the PR description, include:
         - baseline audit status
