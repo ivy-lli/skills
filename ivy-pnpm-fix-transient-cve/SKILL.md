@@ -66,22 +66,17 @@ Run the following for each target repository's branch-specific working directory
 	- Run `pnpm -C <repo-dir> audit --json` and record current findings.
 
 5. Apply automated remediation attempt.
-	- Run `pnpm -C <repo-dir> audit --fix`.
-	- Run `pnpm -C <repo-dir> install`.
+  - Run `pnpm -C <repo-dir> audit --fix=update`.
 
-6. Revert workspace side effects and normalize lock state.
-	- If `pnpm-workspace.yaml` changed due to remediation, revert only that file.
-	- Run `pnpm -C <repo-dir> install` again after the revert.
-
-7. Re-scan vulnerabilities.
+6. Re-scan vulnerabilities.
 	- Run `pnpm -C <repo-dir> audit --json` again.
 	- Compare with baseline to determine whether CVEs were reduced or removed.
 
-8. Inspect resulting file changes.
+7. Inspect resulting file changes.
 	- Keep only dependency-related files required for the fix (for example lockfiles and package manifests).
 	- Exclude unrelated edits from the change set.
 
-9. Create branch and PR when there are meaningful updates.
+8. Create branch and PR when there are meaningful updates.
    - If no relevant changes exist, do not open a branch/PR.
    - If relevant changes exist (within the branch-specific working directory):
      - Create a new branch named like `chore/pnpm-audit-fix-transient-cve-<date>`.
@@ -113,7 +108,6 @@ Run the following for each target repository's branch-specific working directory
 ## Decision Points
 - Branch folder missing or not a git repo: skip that repository and report it.
 - Dirty worktree detected: require explicit user decision before any destructive action.
-- `pnpm-workspace.yaml` changed: revert that file and re-install before final audit.
 - No dependency change after fix: report only, skip branch and PR.
 
 ## Completion Criteria
