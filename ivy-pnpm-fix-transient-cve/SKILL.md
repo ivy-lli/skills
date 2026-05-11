@@ -74,6 +74,9 @@ Run the following for each target repository's branch-specific working directory
 
 7. Inspect resulting file changes.
 	- Keep only dependency-related files required for the fix (for example lockfiles and package manifests).
+  - Revert any `package.json` changes introduced by `pnpm audit --fix=update` when they only remove `workspace:` versions, since those changes are not needed.
+  - Revert any `pnpm-workspace.yaml` changes introduced by `pnpm audit --fix=update` that add fixed packages to `minimumReleaseAgeExclude`, since the default release age should be sufficient.
+  - After any such reverts, rerun `pnpm -C <repo-dir> install` so the lockfile is updated to match the final manifest state.
 	- Exclude unrelated edits from the change set.
 
 8. Create branch and PR when there are meaningful updates.
@@ -81,10 +84,10 @@ Run the following for each target repository's branch-specific working directory
    - If relevant changes exist (within the branch-specific working directory):
      - Create a new branch named like `chore/pnpm-audit-fix-transient-cve-<date>`.
       - Commit with a clear message describing audit-driven dependency updates.
-      - Push branch and open one PR per repository working directory:
+      - Push branch and open one draft PR per repository working directory:
         - `git push -u origin <branch-name>`
         - Detect the current branch from the folder context (e.g., `master` for `<repo>-master/`)
-        - `gh pr create --base <current-branch> --head <branch-name> --title "chore: pnpm audit fix transient CVEs" --body "<summary>"`
+        - `gh pr create --draft --base <current-branch> --head <branch-name> --title "chore: pnpm audit fix transient CVEs" --body "<summary>"`
       - After the PR is created successfully, switch back to the default branch for that working directory and delete the temporary local branch:
         - `git checkout <current-branch>`
         - `git branch -d <branch-name>`
