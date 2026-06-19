@@ -1,6 +1,6 @@
 ---
 name: ivy-pnpm-fix-transient-cve
-description: 'Check ivy pnpm repositories for open CVEs in transient dependencies on master and release/12 worktrees, apply safe audit fixes, validate results, and open PRs only when real dependency changes are introduced.'
+description: 'Check ivy pnpm repositories for open CVEs in transient dependencies on master, release/12, and release/10 worktrees, apply safe audit fixes, validate results, and open PRs only when real dependency changes are introduced.'
 argument-hint: 'Optional: run on all default ivy pnpm repos or a provided subset of absolute repo paths'
 ---
 
@@ -8,7 +8,7 @@ argument-hint: 'Optional: run on all default ivy pnpm repos or a provided subset
 
 ## When To Use
 - You need to scan ivy pnpm repositories for vulnerable transient dependencies that Renovate may not auto-upgrade.
-- You need to scan ivy pnpm repositories on either `master` or `release/12` worktrees.
+- You need to scan ivy pnpm repositories on `master`, `release/12`, or `release/10` worktrees.
 - You want a repeatable, low-risk flow that preserves local work and only proposes focused dependency updates.
 - You need standardized per-repo reporting and PR creation when fixes are applied.
 
@@ -21,12 +21,14 @@ Default `master` repositories use the `-master/` subfolder:
 - `/Users/lli/GitWorkspace/database-editor/database-editor-master/`
 - `/Users/lli/GitWorkspace/dataclass-editor/dataclass-editor-master/`
 - `/Users/lli/GitWorkspace/form-editor/form-editor-master/`
+- `/Users/lli/GitWorkspace/monaco-yaml-ivy/monaco-yaml-ivy-master/`
 - `/Users/lli/GitWorkspace/persistence-editor/persistence-editor-master/`
 - `/Users/lli/GitWorkspace/process-editor/process-editor-master/`
 - `/Users/lli/GitWorkspace/primefaces-themes/primefaces-themes-master/`
 - `/Users/lli/GitWorkspace/restclient-editor/restclient-editor-master/`
 - `/Users/lli/GitWorkspace/role-editor/role-editor-master/`
 - `/Users/lli/GitWorkspace/runtimelog-view/runtimelog-view-master/`
+- `/Users/lli/GitWorkspace/swagger-ui-ivy/swagger-ui-ivy-master/`
 - `/Users/lli/GitWorkspace/ui-components/ui-components-master/`
 - `/Users/lli/GitWorkspace/user-editor/user-editor-master/`
 - `/Users/lli/GitWorkspace/variable-editor/variable-editor-master/`
@@ -37,10 +39,18 @@ Default `master` repositories use the `-master/` subfolder:
 Default `release/12` repositories currently available in local `-12/` worktrees are:
 - `/Users/lli/GitWorkspace/dataclass-editor/dataclass-editor-12/`
 - `/Users/lli/GitWorkspace/form-editor/form-editor-12/`
+- `/Users/lli/GitWorkspace/monaco-yaml-ivy/monaco-yaml-ivy-12/`
+- `/Users/lli/GitWorkspace/primefaces-themes/primefaces-themes-12/`
 - `/Users/lli/GitWorkspace/process-editor/process-editor-12/`
+- `/Users/lli/GitWorkspace/swagger-ui-ivy/swagger-ui-ivy-12/`
 - `/Users/lli/GitWorkspace/ui-components/ui-components-12/`
 - `/Users/lli/GitWorkspace/variable-editor/variable-editor-12/`
 - `/Users/lli/GitWorkspace/neo/neo-12/`
+
+Default `release/10` repositories currently available in local `-10/` worktrees are:
+- `/Users/lli/GitWorkspace/primefaces-themes/primefaces-themes-10/`
+- `/Users/lli/GitWorkspace/process-editor/process-editor-10/`
+- `/Users/lli/GitWorkspace/swagger-ui-ivy/swagger-ui-ivy-10/`
 
 If the user supplies additional repository paths and a target branch-specific working directory is missing, skip that repository and report it as `not found`.
 
@@ -64,6 +74,7 @@ Run the following for each target repository's branch-specific working directory
   - Determine the intended base branch from the working-directory context.
   - For `*-master/` folders, the intended branch is `master`.
   - For `*-12/` folders, the intended branch is `release/12`.
+  - For `*-10/` folders, the intended branch is `release/10`.
    - Verify the current branch matches the intended base branch before continuing. Do not use some other currently checked out feature branch just because it is active.
    - If the current branch does not match the intended base branch and the worktree is clean, switch to the intended base branch first.
    - If the current branch does not match and switching branches is blocked by local changes, stop and ask the user how to handle them.
@@ -99,11 +110,11 @@ Run the following for each target repository's branch-specific working directory
    - If no relevant changes exist, do not open a branch/PR.
    - If relevant changes exist (within the branch-specific working directory):
      - Create a new branch named like `chore/pnpm-audit-fix-transient-cve-<branch-token>-<date>`.
-     - Use `master` or `release-12` as the `<branch-token>` so branch names stay unique across worktrees.
+      - Use `master`, `release-12`, or `release-10` as the `<branch-token>` so branch names stay unique across worktrees.
       - Commit with a clear message describing audit-driven dependency updates.
       - Push branch and open one draft PR per repository working directory:
         - `git push -u origin <branch-name>`
-        - Detect the current branch from the folder context (for example `master` for `<repo>-master/` or `release/12` for `<repo>-12/`)
+        - Detect the current branch from the folder context (for example `master` for `<repo>-master/`, `release/12` for `<repo>-12/`, or `release/10` for `<repo>-10/`)
         - `gh pr create --draft --base <current-branch> --head <branch-name> --title "chore: pnpm audit fix transient CVEs" --body "<summary>"`
       - After the PR is created successfully, switch back to the default branch for that working directory and delete the temporary local branch:
         - `git checkout <current-branch>`
@@ -142,7 +153,7 @@ Run the following for each target repository's branch-specific working directory
 
 ## Output Format
 Return a compact table with one row per repository and these columns:
-- repository (with branch suffix, for example `ui-components-master` or `ui-components-12`)
+- repository (with branch suffix, for example `ui-components-master`, `ui-components-12`, or `process-editor-10`)
 - git status (valid repo / not found / error)
 - dirty worktree handled (yes/no + action)
 - pre-fix CVE count
