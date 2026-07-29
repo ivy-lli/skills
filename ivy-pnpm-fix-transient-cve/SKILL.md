@@ -32,7 +32,7 @@ Default `master` repositories use the `-master/` subfolder:
 - `/Users/lli/GitWorkspace/ui-components/ui-components-master/`
 - `/Users/lli/GitWorkspace/user-editor/user-editor-master/`
 - `/Users/lli/GitWorkspace/variable-editor/variable-editor-master/`
-- `/Users/lli/GitWorkspace/vscode-designer/vscode-designer-master/`
+- `/Users/lli/GitWorkspace/vscode-designer/master/`
 - `/Users/lli/GitWorkspace/webservice-editor/webservice-editor-master/`
 - `/Users/lli/GitWorkspace/neo/neo-master/`
 
