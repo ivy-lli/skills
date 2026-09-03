@@ -27,14 +27,12 @@ Default `master` repositories use the `-master/` subfolder:
 - `/Users/lli/GitWorkspace/primefaces-themes/primefaces-themes-master/`
 - `/Users/lli/GitWorkspace/restclient-editor/restclient-editor-master/`
 - `/Users/lli/GitWorkspace/role-editor/role-editor-master/`
-- `/Users/lli/GitWorkspace/runtimelog-view/runtimelog-view-master/`
 - `/Users/lli/GitWorkspace/swagger-ui-ivy/swagger-ui-ivy-master/`
 - `/Users/lli/GitWorkspace/ui-components/ui-components-master/`
 - `/Users/lli/GitWorkspace/user-editor/user-editor-master/`
 - `/Users/lli/GitWorkspace/variable-editor/variable-editor-master/`
 - `/Users/lli/GitWorkspace/vscode-designer/master/`
 - `/Users/lli/GitWorkspace/webservice-editor/webservice-editor-master/`
-- `/Users/lli/GitWorkspace/neo/neo-master/`
 
 Default `release/12` repositories currently available in local `-12/` worktrees are:
 - `/Users/lli/GitWorkspace/dataclass-editor/dataclass-editor-12/`
