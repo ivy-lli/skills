@@ -37,10 +37,8 @@ Default `master` repositories use the `-master/` subfolder:
 Default `release/12` repositories currently available in local `-12/` worktrees are:
 - `/Users/lli/GitWorkspace/dataclass-editor/dataclass-editor-12/`
 - `/Users/lli/GitWorkspace/form-editor/form-editor-12/`
-- `/Users/lli/GitWorkspace/monaco-yaml-ivy/monaco-yaml-ivy-12/`
 - `/Users/lli/GitWorkspace/primefaces-themes/primefaces-themes-12/`
 - `/Users/lli/GitWorkspace/process-editor/process-editor-12/`
-- `/Users/lli/GitWorkspace/swagger-ui-ivy/swagger-ui-ivy-12/`
 - `/Users/lli/GitWorkspace/ui-components/ui-components-12/`
 - `/Users/lli/GitWorkspace/variable-editor/variable-editor-12/`
 - `/Users/lli/GitWorkspace/neo/neo-12/`
@@ -48,7 +46,6 @@ Default `release/12` repositories currently available in local `-12/` worktrees 
 Default `release/10` repositories currently available in local `-10/` worktrees are:
 - `/Users/lli/GitWorkspace/primefaces-themes/primefaces-themes-10/`
 - `/Users/lli/GitWorkspace/process-editor/process-editor-10/`
-- `/Users/lli/GitWorkspace/swagger-ui-ivy/swagger-ui-ivy-10/`
 
 If the user supplies additional repository paths and a target branch-specific working directory is missing, skip that repository and report it as `not found`.
 
