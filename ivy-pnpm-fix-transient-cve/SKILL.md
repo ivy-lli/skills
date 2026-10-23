@@ -21,13 +21,13 @@ Default `master` repositories use the `-master/` subfolder:
 - `/Users/lli/GitWorkspace/database-editor/database-editor-master/`
 - `/Users/lli/GitWorkspace/dataclass-editor/dataclass-editor-master/`
 - `/Users/lli/GitWorkspace/form-editor/form-editor-master/`
-- `/Users/lli/GitWorkspace/monaco-yaml-ivy/monaco-yaml-ivy-master/`
+- `/Users/lli/GitWorkspace/monaco-yaml-ivy/`
 - `/Users/lli/GitWorkspace/persistence-editor/persistence-editor-master/`
 - `/Users/lli/GitWorkspace/process-editor/process-editor-master/`
 - `/Users/lli/GitWorkspace/primefaces-themes/primefaces-themes-master/`
 - `/Users/lli/GitWorkspace/restclient-editor/restclient-editor-master/`
 - `/Users/lli/GitWorkspace/role-editor/role-editor-master/`
-- `/Users/lli/GitWorkspace/swagger-ui-ivy/swagger-ui-ivy-master/`
+- `/Users/lli/GitWorkspace/swagger-ui-ivy/`
 - `/Users/lli/GitWorkspace/ui-components/ui-components-master/`
 - `/Users/lli/GitWorkspace/user-editor/user-editor-master/`
 - `/Users/lli/GitWorkspace/variable-editor/variable-editor-master/`
