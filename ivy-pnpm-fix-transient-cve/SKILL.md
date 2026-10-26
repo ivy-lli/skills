@@ -21,18 +21,20 @@ Default `master` repositories use the `-master/` subfolder:
 - `/Users/lli/GitWorkspace/database-editor/database-editor-master/`
 - `/Users/lli/GitWorkspace/dataclass-editor/dataclass-editor-master/`
 - `/Users/lli/GitWorkspace/form-editor/form-editor-master/`
-- `/Users/lli/GitWorkspace/monaco-yaml-ivy/`
 - `/Users/lli/GitWorkspace/persistence-editor/persistence-editor-master/`
 - `/Users/lli/GitWorkspace/process-editor/process-editor-master/`
 - `/Users/lli/GitWorkspace/primefaces-themes/primefaces-themes-master/`
 - `/Users/lli/GitWorkspace/restclient-editor/restclient-editor-master/`
 - `/Users/lli/GitWorkspace/role-editor/role-editor-master/`
-- `/Users/lli/GitWorkspace/swagger-ui-ivy/`
 - `/Users/lli/GitWorkspace/ui-components/ui-components-master/`
 - `/Users/lli/GitWorkspace/user-editor/user-editor-master/`
 - `/Users/lli/GitWorkspace/variable-editor/variable-editor-master/`
 - `/Users/lli/GitWorkspace/vscode-designer/master/`
 - `/Users/lli/GitWorkspace/webservice-editor/webservice-editor-master/`
+- `/Users/lli/GitWorkspace/monaco-yaml-ivy/`
+- `/Users/lli/GitWorkspace/swagger-ui-ivy/`
+- `/Users/lli/GitWorkspace/dev.axonivy.com/frontend`
+- `/Users/lli/GitWorkspace/market.axonivy.com/frontend`
 
 Default `release/12` repositories currently available in local `-12/` worktrees are:
 - `/Users/lli/GitWorkspace/dataclass-editor/dataclass-editor-12/`
